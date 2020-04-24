@@ -8,7 +8,8 @@ def browse_button():
     directorio_path.set(nombreDeArchivo)
     print("La ruta enviada es "+str(nombreDeArchivo))
     print(nombreDeArchivo)
-    start_client(nombreDeArchivo)
+    #print(directorio_path)
+    start_client(str(nombreDeArchivo))
 
 root = Tk()
 directorio_path = StringVar()
