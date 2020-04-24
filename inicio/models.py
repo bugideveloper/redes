@@ -7,5 +7,9 @@ class Archivo(models.Model):
     tamano = models.TextField(max_length=30)
     fecha = models.DateTimeField(auto_now_add= True)
     ubicacion = models.TextField(max_length=254)
+    
+    def __str__(self):
+        return '%s %s' % (self.nombre, self.fecha)
+    
     #numSongs = models.IntegerField(default=0,validators=[MinValueValidator(0,"Year must not surpass 1990"),MaxValueValidator(12400,"Year cannot be greater than 2056")])
 
