@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap_files_dashboard_template/bootstrap.min.css' %} ">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap_files_dashboard_template/dashboard.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fontello/css/fontello.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+    <title>Archivos Compartidos</title>
+</head>
+<body>
+
+    <!-- header -->
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow barra">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0">Información de conexión</a>
+    </nav>
+    <!-- body -->
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                    <div class="sidebar-sticky">
+                        <div class="card" style="width: 15.5rem;">
+                          <div align="center"><img class="img-card" src="{% static 'images/logouv.png' %}" width="200" height="150" alt="Card image cap"></div>
+                            <div class="card-body">
+                                <h5 class="card-title">FILEMSICU <br> Visualizador de archivos</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Sistema desarrollado como parte de la actividad Lab 04.</h6>
+                            </div>
+                        </div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link textobanner">
+                                    <span><i class="icon-home-circled iconosbanner"></i></span>
+                                    Servidor
+                                    <input class="form-control form-control-dark w-100" type="text" placeholder="Estado de la conexión" id="conexion" readonly>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link textobanner">
+                                    <span><i class="icon-group-circled iconosbanner"></i></span>
+                                    Equipo conectado:
+                                    <input class="form-control form-control-dark w-100" type="text" placeholder="Nombre del equipo" id="nom_equipo" readonly>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="bienvenida d-block d-sm-none d-none d-sm-block d-md-none">
+                <div class="row">
+                    <div class="col-12">
+                        <span class="cover-img">
+                            <img class="mx-auto d-block" src="{% static 'images/logouv.png' %}" alt="">
+                            <h4 class="text-center">FILEMSICU Visualizador de archivos</h4>
+                            <p class="text-center text-muted">Sistema desarrollado como parte de la actividad Lab 04</p>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <span>
+                            <a class="nav-link textobanner">
+                                <span><i class="icon-home-circled iconosbanner"></i></span>
+                                Servidor
+                                <input class="form-control form-control-dark w-100" type="text" placeholder="Estado de la conexión" id="conexion" readonly>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <span>
+                            <a class="nav-link textobanner">
+                                <span><i class="icon-group-circled iconosbanner"></i></span>
+                                Equipo conectado:
+                                <input class="form-control form-control-dark w-100" type="text" placeholder="Nombre del equipo" id="nom_equipo" readonly>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chartjs-size-monitor"></div>
+            
+			<div class="Contenedores"><h2>Lista de archivos compartidos en la conexión</h2></div>
+			
+		      <div>
+			      <div class="container-fluid table-responsive Contenedores">
+			        <table class="table table-striped table-sm">
+			          <thead>
+			            <tr>
+			              <th>Icono</th>
+			              <th>Nombre del archivo</th>
+			              <th>Tamaño del archivo</th>
+			              <th>Fecha de modificación</th>
+			              <th>Ubicación del archivo</th>
+			            </tr>
+			          </thead>
+			          <tbody>
+                        {% for archivo in archivos %}
+			            <tr>
+			              <td>{{archivo.pk}}</td>
+			              <td>{{archivo.nombre}}</td>
+			              <td>{{archivo.tamano}}</td>
+			              <td>{{archivo.fecha}}</td>
+                          <td>{{archivo.ubicacion}}</td>
+                        </tr>
+                        {% endfor %}
+			          </tbody>
+			        </table>
+			     </div>
+
+	<h3>Detalles del archivo seleccionado:</h3>
+		    <div class="container-fluid Contenedores">
+
+		 	 	<label class="mb-2 mr-sm-2">Nombre de archivo:</label>
+			 	<input type="text" class="form-control form-control-mb" id="archivo" placeholder="Nombre del archivo" name="archivo" readonly>
+
+				<label class="mb-2 mr-sm-2">Fecha de creación:</label>
+			    <input type="text" class="form-control form-control-mb" id="fercha1" placeholder="DD-MM-AAAA" name="fecha1" readonly>
+
+			    <label class="mb-2 mr-sm-2">Fecha de ultima modificación:</label>
+			    <input type="text" class="form-control form-control-mb" id="fecha2" placeholder="DD-MM-AAAA" name="fecha2" readonly>
+
+			    <label class="mb-2 mr-sm-2">Datos de modificación:</label>
+			    <input type="text" class="form-control form-control-mb" id="modificacion" placeholder="Modificacion" name="modificacion" readonly>
+
+			    <label class="mb-2 mr-sm-2">Disponible en:</label>
+			    <input type="text" class="form-control form-control-mb" id="archivo" placeholder="Dirección del equipo" name="disponibilidad" readonly>
+
+			    <label class="mb-2 mr-sm-2">Tamaño del archivo:</label>
+			    <input type="text" class="form-control form-control-mb" id="tamaño" placeholder="Tamaño del archivo" name="tamaño" readonly>
+
+			  </div>
+			</div>
+		</main>
+    </div>
+</body>
+</html>
