@@ -1,0 +1,10 @@
+.git
+.gitattributes
+db.sqlite3
+inicio
+localFiles.txt
+manage.py
+README.md
+redes
+static
+templates
