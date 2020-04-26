@@ -19,6 +19,20 @@
 </head>
 <body>
 
+    <script>
+        var ws = new WebSocket("ws://127.0.0.1:5678/"),
+            messages = document.createElement('ul');
+        ws.onmessage = function (event) {
+            var messages = document.getElementsByTagName('ul')[0],
+                message = document.createElement('li'),
+                content = document.createTextNode(event.data);
+            message.appendChild(content);
+            messages.appendChild(message);
+        };
+        document.body.appendChild(messages);
+        /*alert("Connected to the server")*/
+    </script>
+
     <!-- header -->
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow barra">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0">Información de conexión</a>
