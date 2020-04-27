@@ -24,7 +24,7 @@ class SocketClient(object):
         uri = "ws://"+server_ip+":5678"
         async with websockets.connect(uri) as websocket:
             while True:
-                ip = get_public_ip()
+                ip = "192.168.0.6"
                 archivos = get_files(".")
                 archivos.insert(0,ip)
                 #Here we have the same of files

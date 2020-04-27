@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,8 +26,9 @@
 
 		async function showData() {
 			try {
-				const socket = new WebSocket('ws://127.0.0.1:5678/');
+				const socket = new WebSocket('ws://192.168.0.6:5678/');
 				await socket.addEventListener('message', async (event) => {
+					
 					let ip = '';
 					let array = [];
 					let file = {};
