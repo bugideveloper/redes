@@ -4,6 +4,7 @@ import random
 import websockets
 import pickle
 from file_methods import *
+import json
 
 class SocketServer(object):
     def __init__(self):
@@ -15,7 +16,7 @@ class SocketServer(object):
             print("Buscando archivos")
             if self.mensaje is not None:
                 for archivo in self.mensaje:
-                    await websocket.send(str(archivo))
+                    await websocket.send(json.dumps(archivo))
                 await asyncio.sleep(random.random() * 5)
             #archivos = get_archivos("127.0.0.1",".")
             #for archivo in archivos:

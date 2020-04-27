@@ -20,12 +20,14 @@
 <body>
 
     <script>
+
         var ws = new WebSocket("ws://127.0.0.1:5678/"),
             messages = document.createElement('ul');
         ws.onmessage = function (event) {
             var messages = document.getElementsByTagName('ul')[0],
                 message = document.createElement('li'),
                 content = document.createTextNode(event.data);
+                IsJsonString(event.data)
             message.appendChild(content);
             messages.appendChild(message);
         };
@@ -120,15 +122,15 @@
 			            </tr>
 			          </thead>
 			          <tbody>
-                        {% for archivo in archivos %}
+                        <!--Aqui se deben actualizar los datos-->
 			            <tr>
-			              <td>{{archivo.pk}}</td>
-			              <td>{{archivo.nombre}}</td>
-			              <td>{{archivo.tamano}}</td>
-			              <td>{{archivo.fecha}}</td>
-                          <td>{{archivo.ubicacion}}</td>
+			              <td>1</td>
+			              <td>Archivo.mp3</td>
+			              <td>522</td>
+			              <td>30/05/2020</td>
+                          <td>/home/users/</td>
                         </tr>
-                        {% endfor %}
+                        <!--Final de los datos-->
 			          </tbody>
 			        </table>
 			     </div>
