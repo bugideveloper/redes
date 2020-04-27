@@ -26,7 +26,7 @@
 		async function showData() {
 			try {
 				const socket = new WebSocket('ws://127.0.0.1:5678/');
-				await socket.addEventListener('message', async function (event) {
+				await socket.addEventListener('message', async (event) => {
 					let ip = '';
 					let array = [];
 					let file = {};
