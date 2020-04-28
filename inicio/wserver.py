@@ -42,7 +42,8 @@ class SocketServer(object):
                 self.mensaje.append(archivos)
                 print("Enviando datos al cliente")
                 lista = pickle.dumps(self.serversIP)
-                
+
+                #await asyncio.wait(websocket.send(lista))
                 await asyncio.wait([websocket.send(lista) for user in self.websockets])
                 #await asyncio.wait([websocket.send(json.dumps(self.serversIP)) for user in self.websockets])
                 #await asyncio.wait([websocket.send(self.serversIP) for user in self.websockets])
