@@ -8,7 +8,7 @@ from file_methods import *
 class SocketClient(object):
     def __init__(self):
         self.serversIP = list()
-        self.defaultServer = "192.168.0.6"
+        self.defaultServer = "127.0.0.1"
     
     def set_defaultServer(self,serverip):
         self.defaultServer = serverip
