@@ -16,6 +16,8 @@
 
 	<link rel="stylesheet" href="{% static 'css/app.css' %}">
 
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.css' %}">
+
 	<title>Archivos Compartidos</title>
 </head>
 
@@ -45,60 +47,6 @@
 			} catch (e) {
 				console.error(e);
 			}
-		}
-
-		//Román
-		function agregaArchivo(data) {
-			let iconos = '';
-			let x = document.getElementById('tableArchivos').insertRow(-1);
-			let iconox = x.insertCell(0);
-			let nombre = x.insertCell(1);
-			let tamano = x.insertCell(2);
-			let fecham = x.insertCell(3);
-			let ubicacion = x.insertCell(4);
-			let extension = data.trim('.')
-			switch (extension[1]) {
-				case 'txt':
-				case 'TXT':
-					iconos = '<i class="far fa-file-alt"></i>';
-					break;
-				case 'PDF':
-				case 'pdf':
-					iconos = '<i class="far fa-file-pdf"></i>';
-					break;
-				case 'doc':
-				case 'DOC':
-				case 'DOCX':
-				case 'docx':
-					iconos = '<i class="far fa-file-word"></i>';
-					break;
-				case 'pptx':
-				case 'PPTX':
-					iconos = '<i class="far fa-file-powerpoint"></i>';
-					break;
-				case 'png':
-				case 'PNG':
-				case 'jpg':
-				case 'JPG':
-				case 'JPEG':
-				case 'jpeg':
-					iconos = '<i class="far fa-file-image"></i>';
-					break;
-				case 'xlsx':
-				case 'XLSX':
-				case 'XLS':
-				case 'xls':
-					iconos = '<i class="far fa-file-excel"></i>';
-					break;
-				default:
-					iconos = '<i class="far fa-file"></i>';
-					break;
-			}
-			iconox.innerHTML = icono;
-			nombre.innerHTML = data[0];
-			tamano.innerHTML = data[1];
-			fecham.innerHTML = data[2];
-			ubicacion.innerHTML = data[3];
 		}
 	</script>
 
@@ -189,6 +137,7 @@
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
+								<th>Icono</th>
 								<th>ID</th>
 								<th>Nombre del archivo</th>
 								<th>Tamaño del archivo</th>
@@ -199,8 +148,9 @@
 						<tbody>
 							
 							<tr>
+								<td></td>
 								<td>1</td>
-								<td>correo</td>
+								<td class="docu">correo</td>
 								<td>2000</td>
 								<td>20/08</td>
 								<td>C:/users</td>
@@ -242,5 +192,87 @@
 		</main>
 	</div>
 </body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function(){
+        		        $('table tr').each(function(){
+					          //var texto = $('table tr:nth-child td:nth-child(3)').text();
+					          var texto = $(this).find("td").eq(2).html();
+					          var indice = $(this).closest('tr').find('td:first');
+					          if(!texto){
 
+					          }else{
+					          	asignarIcono(texto,indice);
+					          }
+					    });
+
+			function asignarIcono(texto,indice) {
+			    var extension = texto.substr( (texto.lastIndexOf('.') +1) );
+			    switch(extension){
+							case 'txt':
+							case 'TXT':
+								indice.append('<i class="far fa-file-alt"></i>');
+								break;
+							case 'py':
+							case 'js':
+							case 'php':
+								indice.append('<i class="far fa-file-code"></i>');
+								break;
+							case 'sql':
+							case 'sqlite3':
+								indice.append('<i class="far fa-file"></i>');
+								break;
+							case 'PDF' :
+							case 'pdf':
+								indice.append('<i class="far fa-file-pdf"></i>');
+								break;
+							case 'doc':
+							case 'DOC':
+							case 'DOCX':
+							case 'docx':
+								indice.append('<i class="far fa-file-word"></i>"');
+								break;
+							case 'pptx':
+							case 'PPTX':
+								indice.append('<i class="far fa-file-powerpoint"></i>');
+								break;
+							case 'png':
+							case 'PNG':
+							case 'jpg':
+							case 'JPG':
+							case 'JPEG':
+							case 'jpeg':
+								indice.append('<i class="far fa-image"></i>');
+								break;
+							case 'xlsx':
+							case 'XLSX':
+							case 'XLS':
+							case 'xls':
+								indice.append('<i class="far fa-file-excel"></i>');
+								break;
+							default:
+								indice.append('<i class="far fa-copy"></i>');
+								break;
+				}
+			};
+
+            $(".docu").click(function() {
+                    var variable_recuperada = "";
+                    variable_recuperada = $(this).text();
+                $.ajax({
+                  url: "http://18.222.29.189:8000/api/archivo/" +variable_recuperada,
+                })
+                  .done(function( data ) {
+                    console.log(data);
+                    $('#archivo').val(data.nombre);
+                    $('#fercha1').val(data.fecha);
+                    $('#fecha2').val(data.fecha);
+                    $('#modificacion').val(data.fecha);
+                    $('#disponibilidad').val(data.ubicacion);
+                    $('#tamaño').val(data.tamano + 'Kb');
+                  });
+                });
+
+        });
+    </script>
 </html>
