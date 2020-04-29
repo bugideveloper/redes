@@ -20,12 +20,12 @@ class SocketClient(object):
         return self.serversIP
     
     #This function sends the data to the server
-    async def hello(self,server_ip):
+    async def hello(self,server_ip,path):
         uri = "ws://"+server_ip+":5678"
         async with websockets.connect(uri) as websocket:
             while True:
                 ip = get_public_ip()
-                archivos = get_files(".")
+                archivos = get_files(path)
                 archivos.insert(0,ip)
                 #Here we have the same of files
                 lista = pickle.dumps(archivos)
@@ -70,18 +70,18 @@ class SocketClient(object):
             task.cancel()
 
 
-    def start_connection(self,default_server,position):
+    def start_connection(self,default_server,position,path):
         try:
             #default_server = '192.168.0.6'
             #Here goes the handler function
-            asyncio.get_event_loop().run_until_complete(self.hello(default_server))
+            asyncio.get_event_loop().run_until_complete(self.hello(default_server,path))
             #asyncio.get_event_loop().run_until_complete(self.handler(default_server))
         except (websockets.ConnectionClosedError,ConnectionRefusedError,TimeoutError):
             try:
                 print("No se pudo conectar con el servidor "+(default_server))
                 position += 1
                 print("Conectandose al siguiente server "+self.serversIP[position])
-                self.start_connection(self.serversIP[position],position)
+                self.start_connection(self.serversIP[position],position,path)
             except IndexError:
                 print("Connection Closed there is no server to connect!")
         #next_server = ips[1]
@@ -93,8 +93,12 @@ class SocketClient(object):
 #default_server = '192.168.0.6'
 server_position = 0
 client =  SocketClient()
-#client.get_serversIP().append(client.defaultServer)
-client.start_connection(client.get_defaultServer(),server_position)
+#path = "C:/Users/theme/Desktop/thesis"
+
+#path = "./../"
+path = "C:/Users/theme/Desktop/"
+
+client.start_connection(client.get_defaultServer(),server_position,path)
 #client.start_connection(lista_ips[server_position],server_position)
 #print(lista_ips[0])
 

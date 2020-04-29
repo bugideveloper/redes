@@ -29,7 +29,7 @@ def get_files(path):
         archivos = os.listdir(path)
         localNum = random.randint(0,10000)
         for archivo in archivos:
-                a = {"id":localNum,"nombre":archivo, "tamano": str(os.path.getsize(archivo)), "fecha": time.ctime(os.path.getmtime(archivo)), "ubicacion": os.path.abspath(os.getcwd())}
+                a = {"ip": get_public_ip(),"id":localNum,"nombre":archivo, "tamano": str(os.path.getsize(str(path+archivo))), "fecha": time.ctime(os.path.getmtime(str(path+archivo))), "ubicacion": os.path.abspath(path)}
                 json_data = json.dumps(a)
                 data.append(json_data)
                 localNum+=1
