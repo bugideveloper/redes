@@ -191,7 +191,7 @@
 							case 'DOCX':
 							case 'docx':
 								indice = '<i class="far fa-file-word"></i>';
-								break;
+							break;
 							case 'pptx':
 							case 'PPTX':
 								indice = '<i class="far fa-file-powerpoint"></i>';
@@ -214,7 +214,8 @@
 								indice ='<i class="far fa-copy"></i>';
 								break;
 				}	
-
+				if (document.getElementById('tr-'+data.ip)){}
+else{
 				let x = document.getElementById(tablaname).insertRow(-1);
 				let iconox = x.insertCell(0);
 				let nombre = x.insertCell(1);
@@ -226,11 +227,11 @@
 				nombre.innerHTML =  data.nombre;
 				tamano.innerHTML =  data.tamano;
 				fecham.innerHTML =  data.fecha;
-				ubicacion.innerHTML =  data.ubicacion;
+				ubicacion.innerHTML =  data.ubicacion;}
 				
 		}
 			function agregaArchivos(data){
-			
+				
 				let indice  = '';
 				let cosa = data.nombre;
 				let divide = cosa.split('.');
@@ -281,11 +282,14 @@
 									indice ='<i class="far fa-copy"></i>';
 									break;
 					}	
-	
+let nombrex = 'tr-'+data.ip+data.nombre;
+					 if (document.getElementById(nombrex)){ console.log('tr-'+data.ip+data.nombre); }
+else{
 					let x = document.getElementById('tableArchivos').insertRow(-1);
 					let iconox = x.insertCell(0);
 					let nombre = x.insertCell(1);
 					nombre.className = "docu";
+					iconox.id = "tr-"+data.ip+data.nombre;
 					let tamano = x.insertCell(2);
 					let fecham = x.insertCell(3);
 					let ubicacion = x.insertCell(4);
@@ -294,11 +298,12 @@
 					tamano.innerHTML =  data.tamano;
 					fecham.innerHTML =  data.fecha;
 					ubicacion.innerHTML =  data.ubicacion;
+					}
 					
 			}
 			async function showData() {
 				try {
-					const socket = new WebSocket('ws://34.201.219.100:5678/');
+					const socket = new WebSocket('ws://54.205.174.16:5678/');
 					await socket.addEventListener('message', async (event) => {
 						
 						let ip = '';
@@ -309,9 +314,10 @@
 						
 						array = JSON.parse(data);
 						ip = array[0];
-						jQuery("#vivi").empty();
+						if (document.getElementById(ip)){
+						}else{						
 						jQuery("#vivi").append(jQuery("<button>",{ "class": 'direccion btn btn-primary btn-block', "id": ip, 'style': 'margin: 5px;'}).html(ip));
-						
+						}
 						jQuery(".direccion").click(function(e){
 							let documsHost = [];
 							let este = jQuery(this);
@@ -331,16 +337,17 @@
 							console.log(documsHost);
 						});
 						array.shift();
-    					$("#tableArchivos").find("tr:gt(0)").remove();
+
 						$lista =[];
 
 						array.map((el) => {
 							file = JSON.parse(el);
 							files.push(file);
 							if( !$lista.includes(file.nombre)){
-								$lista.push(file);
+								$lista.push(file);	
+								agregaArchivos(file);
 							}
-							agregaArchivos(file);
+
 							$(document).on('click','.docu',function(){ 
 								texto= $(this).text();
 								console.log(files);
@@ -356,7 +363,7 @@
 								}
 							})						
 						})
-						$("#tableArchivos").append("<tbody style='display:none' ><tr><td></td><td class='docu'></td><td></td><td></td><td></td></tr></tbody>");
+
 						});
 
 	
