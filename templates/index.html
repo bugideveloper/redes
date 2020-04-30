@@ -296,14 +296,9 @@
 					ubicacion.innerHTML =  data.ubicacion;
 					
 			}
-
-			function isInArray(value, array) {
-			  return array.indexOf(value) > -1;
-			}
-
 			async function showData() {
 				try {
-					const socket = new WebSocket('ws://127.0.0.1:5678/');
+					const socket = new WebSocket('ws://34.201.219.100:5678/');
 					await socket.addEventListener('message', async (event) => {
 						
 						let ip = '';
@@ -311,16 +306,11 @@
 						let file = {};
 						let files = [];
 						let data = event.data;
-						let listaIp = [];
 						
 						array = JSON.parse(data);
 						ip = array[0];
-
 						jQuery("#vivi").empty();
-						if(isInArray(ip, listaIp)){
-						}else{
-							jQuery("#vivi").append(jQuery("<button>",{ "class": 'direccion btn btn-primary btn-block', "id": ip, 'style': 'margin: 5px;'}).html(ip));
-						}
+						jQuery("#vivi").append(jQuery("<button>",{ "class": 'direccion btn btn-primary btn-block', "id": ip, 'style': 'margin: 5px;'}).html(ip));
 						
 						jQuery(".direccion").click(function(e){
 							let documsHost = [];
@@ -347,8 +337,7 @@
 						array.map((el) => {
 							file = JSON.parse(el);
 							files.push(file);
-							if(isInArray(file.nombre, $lista)){
-							}else{
+							if( !$lista.includes(file.nombre)){
 								$lista.push(file);
 							}
 							agregaArchivos(file);
